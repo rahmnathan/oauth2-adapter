@@ -10,7 +10,7 @@ import java.net.URLEncoder;
 public class RequestBodyProviderPassword implements RequestBodyProvider {
 
     public String buildRequestBody(KeycloakRequestConfig config) throws TokenProviderException {
-        if(!(config instanceof PasswordConfig)){
+        if(config.getAuthType() != AuthType.PASSWORD){
             throw new TokenProviderException("Invalid Password configuration.");
         }
 

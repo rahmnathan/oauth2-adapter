@@ -22,7 +22,7 @@ import java.util.UUID;
 public class RequestBodyProviderJwt implements RequestBodyProvider {
 
     public String buildRequestBody(KeycloakRequestConfig config) throws TokenProviderException {
-        if(!(config instanceof JwtConfig)){
+        if(config.getAuthType() != AuthType.JWT){
             throw new TokenProviderException("Invalid JWT configuration.");
         }
 

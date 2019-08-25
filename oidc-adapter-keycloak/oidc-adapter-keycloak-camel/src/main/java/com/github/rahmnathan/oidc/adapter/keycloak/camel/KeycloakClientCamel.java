@@ -15,9 +15,10 @@ import static com.github.rahmnathan.oidc.adapter.keycloak.camel.KeycloakCamelRou
 
 public class KeycloakClientCamel extends KeycloakClient {
     private final Logger logger = LoggerFactory.getLogger(KeycloakClientCamel.class);
+    private static KeycloakClientCamel KEYCLOAK_CLIENT_CAMEL_SINGLETON = null;
     private final ProducerTemplate template;
 
-    public KeycloakClientCamel(ProducerTemplate template, CamelContext context, KeycloakClientConfig config) {
+    private KeycloakClientCamel(ProducerTemplate template, CamelContext context, KeycloakClientConfig config) {
         super(config);
         new KeycloakCamelRoutes(context, config).configure();
         this.template = template;
@@ -43,5 +44,15 @@ public class KeycloakClientCamel extends KeycloakClient {
         }
 
         return responseExchange.getOut().getBody(SignedJWT.class);
+    }
+
+    public static KeycloakClientCamel getInstance(ProducerTemplate template, CamelContext context, KeycloakClientConfig config) {
+        if (KEYCLOAK_CLIENT_CAMEL_SINGLETON == null) {
+            synchronized(KeycloakClientCamel.class) {
+                KEYCLOAK_CLIENT_CAMEL_SINGLETON = new KeycloakClientCamel(template, context, config);
+            }
+        }
+
+        return KEYCLOAK_CLIENT_CAMEL_SINGLETON;
     }
 }
