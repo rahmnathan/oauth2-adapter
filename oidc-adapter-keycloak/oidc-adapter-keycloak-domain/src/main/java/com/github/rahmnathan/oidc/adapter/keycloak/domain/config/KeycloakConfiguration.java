@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 
 @Value
@@ -35,11 +36,16 @@ public class KeycloakConfiguration {
     }
 
     @Data
+    @Builder
     public static class Jwt {
         @NonNull
         private final String privateKey;
         @NonNull
         private final String keyAlg;
+        @NonNull
+        private final ChronoUnit ttlUnit;
+        @NonNull
+        private final long ttlValue;
 
         public PrivateKey buildPrivateKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
             byte[] decodedKey = Base64.getDecoder().decode(privateKey);

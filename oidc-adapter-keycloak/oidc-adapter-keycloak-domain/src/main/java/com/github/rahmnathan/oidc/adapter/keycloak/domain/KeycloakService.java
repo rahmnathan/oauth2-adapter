@@ -1,6 +1,7 @@
 package com.github.rahmnathan.oidc.adapter.keycloak.domain;
 
 import com.github.rahmnathan.oidc.adapter.keycloak.domain.config.KeycloakConfiguration;
+import com.github.rahmnathan.oidc.adapter.keycloak.domain.providers.AuthType;
 import com.nimbusds.jwt.SignedJWT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

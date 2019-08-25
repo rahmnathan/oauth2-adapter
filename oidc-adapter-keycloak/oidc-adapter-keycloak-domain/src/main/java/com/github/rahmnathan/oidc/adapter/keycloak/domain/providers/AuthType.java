@@ -1,7 +1,6 @@
-package com.github.rahmnathan.oidc.adapter.keycloak.domain;
+package com.github.rahmnathan.oidc.adapter.keycloak.domain.providers;
 
-import com.github.rahmnathan.oidc.adapter.keycloak.domain.providers.RequestBodyProviderJwt;
-import com.github.rahmnathan.oidc.adapter.keycloak.domain.providers.RequestBodyProviderPassword;
+import com.github.rahmnathan.oidc.adapter.keycloak.domain.RequestBodyProvider;
 
 public enum AuthType {
     JWT(new RequestBodyProviderJwt()),

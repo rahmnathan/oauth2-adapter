@@ -14,7 +14,6 @@ import java.net.URLEncoder;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.UUID;
 
@@ -22,20 +21,20 @@ public class RequestBodyProviderJwt implements RequestBodyProvider {
 
     @Override
     public String buildRequestBody(KeycloakConfiguration configuration) throws TokenProviderException {
+        KeycloakConfiguration.Jwt jwtConfig = configuration.getJwt();
+        if(jwtConfig == null){
+            throw new TokenProviderException("JWT configuration cannot be null.");
+        }
+
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                 .jwtID(UUID.randomUUID().toString())
                 .audience(configuration.getUrl() + "/realms/" + configuration.getRealm())
-                .expirationTime(Date.from(Instant.now().plus(30, ChronoUnit.SECONDS)))
+                .expirationTime(Date.from(Instant.now().plus(jwtConfig.getTtlValue(), jwtConfig.getTtlUnit())))
                 .subject(configuration.getClientId())
                 .notBeforeTime(Date.from(Instant.now()))
                 .build();
 
         SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.RS512), claimsSet);
-
-        KeycloakConfiguration.Jwt jwtConfig = configuration.getJwt();
-        if(jwtConfig == null){
-            throw new TokenProviderException("JWT configuration cannot be null.");
-        }
 
         try {
             signedJWT.sign(new RSASSASigner(jwtConfig.buildPrivateKey()));
