@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import java.time.temporal.ChronoUnit;
 
-public class KeycloakClientCamelTest extends CamelTestSupport {
+public class KeycloakClientCamelIT extends CamelTestSupport {
     private final String url = "http://localhost:8080/auth";
     private KeycloakClientCamel keycloakClientCamel;
     private KeycloakService keycloakService;
@@ -29,7 +29,7 @@ public class KeycloakClientCamelTest extends CamelTestSupport {
                 .build();
 
         KeycloakClientConfig configuration = KeycloakClientConfig.builder()
-                .url("http://localhost:8080/auth")
+                .url(url)
                 .initialRetryDelay(400)
                 .retryCount(2)
                 .timoutMs(4000)
