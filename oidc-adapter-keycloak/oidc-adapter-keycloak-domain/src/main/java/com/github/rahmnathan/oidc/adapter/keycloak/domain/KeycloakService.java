@@ -9,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.time.Instant;
 import java.util.Date;
 
-import static java.time.temporal.ChronoUnit.SECONDS;
-
 public class KeycloakService {
     private final Logger logger = LoggerFactory.getLogger(KeycloakService.class);
     private final KeycloakRequestConfig config;
@@ -26,7 +24,8 @@ public class KeycloakService {
         logger.info("Attempting to acquire access token");
 
         if(cachedToken != null){
-            Date compareDate = Date.from(Instant.now().plus(30, SECONDS));
+            KeycloakRequestConfig.TokenRefreshThreshold refreshThreshold = config.getTokenRefreshThreshold();
+            Date compareDate = Date.from(Instant.now().plus(refreshThreshold.getValue(), refreshThreshold.getUnit()));
             if(cachedToken.getJWTClaimsSet().getExpirationTime().after(compareDate)){
                 logger.debug("Using cached access token.");
                 return cachedToken;

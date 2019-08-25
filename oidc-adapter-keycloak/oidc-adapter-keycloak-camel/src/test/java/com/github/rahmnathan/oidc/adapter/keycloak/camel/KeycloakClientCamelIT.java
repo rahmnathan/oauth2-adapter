@@ -3,6 +3,7 @@ package com.github.rahmnathan.oidc.adapter.keycloak.camel;
 import com.github.rahmnathan.oidc.adapter.keycloak.domain.client.KeycloakClientConfig;
 import com.github.rahmnathan.oidc.adapter.keycloak.domain.config.JwtConfig;
 import com.github.rahmnathan.oidc.adapter.keycloak.domain.KeycloakService;
+import com.github.rahmnathan.oidc.adapter.keycloak.domain.config.KeycloakRequestConfig;
 import com.nimbusds.jwt.SignedJWT;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Before;
@@ -32,6 +33,7 @@ public class KeycloakClientCamelIT extends CamelTestSupport {
                 .ttlUnit(ChronoUnit.SECONDS)
                 .ttlValue(30)
                 .url(url)
+                .tokenRefreshThreshold(new KeycloakRequestConfig.TokenRefreshThreshold(ChronoUnit.SECONDS, 30))
                 .clientId("movieuser")
                 .realm("LocalMovies")
                 .build();

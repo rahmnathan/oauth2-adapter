@@ -13,8 +13,8 @@ public class ClientSecretConfig extends KeycloakRequestConfig {
     private final String clientSecret;
 
     @Builder
-    public ClientSecretConfig(String realm, String clientId, @NonNull String clientSecret) {
-        super(realm, clientId);
+    public ClientSecretConfig(String realm, String clientId, TokenRefreshThreshold tokenRefreshThreshold, @NonNull String clientSecret) {
+        super(realm, clientId, tokenRefreshThreshold);
         this.clientSecret = clientSecret;
     }
 

@@ -15,8 +15,9 @@ public class PasswordConfig extends KeycloakRequestConfig {
     private final String password;
 
     @Builder
-    public PasswordConfig(String realm, String clientId, @NonNull String username, @NonNull String password) {
-        super(realm, clientId);
+    public PasswordConfig(String realm, String clientId, TokenRefreshThreshold tokenRefreshThreshold,
+                          @NonNull String username, @NonNull String password) {
+        super(realm, clientId, tokenRefreshThreshold);
         this.username = username;
         this.password = password;
     }

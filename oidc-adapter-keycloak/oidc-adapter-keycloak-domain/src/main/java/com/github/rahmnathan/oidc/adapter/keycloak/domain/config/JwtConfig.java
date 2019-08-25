@@ -30,8 +30,9 @@ public class JwtConfig extends KeycloakRequestConfig {
     private final long ttlValue;
 
     @Builder
-    public JwtConfig(String realm, String clientId, @NonNull String url, @NonNull String privateKey, @NonNull String keyAlg, @NonNull ChronoUnit ttlUnit, @NonNull long ttlValue) {
-        super(realm, clientId);
+    public JwtConfig(String realm, String clientId, TokenRefreshThreshold tokenRefreshThreshold, @NonNull String url,
+                     @NonNull String privateKey, @NonNull String keyAlg, @NonNull ChronoUnit ttlUnit, @NonNull long ttlValue) {
+        super(realm, clientId, tokenRefreshThreshold);
         this.url = url;
         this.privateKey = privateKey;
         this.keyAlg = keyAlg;
