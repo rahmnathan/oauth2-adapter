@@ -1,7 +1,9 @@
 package com.github.rahmnathan.oidc.adapter.keycloak.domain.providers;
 
 import com.github.rahmnathan.oidc.adapter.keycloak.domain.RequestBodyProvider;
-import com.github.rahmnathan.oidc.adapter.keycloak.domain.config.KeycloakConfiguration;
+import com.github.rahmnathan.oidc.adapter.keycloak.domain.config.JwtConfig;
+import com.github.rahmnathan.oidc.adapter.keycloak.domain.client.KeycloakClientConfig;
+import com.github.rahmnathan.oidc.adapter.keycloak.domain.config.KeycloakRequestConfig;
 import com.github.rahmnathan.oidc.adapter.keycloak.domain.exception.TokenProviderException;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -19,18 +21,18 @@ import java.util.UUID;
 
 public class RequestBodyProviderJwt implements RequestBodyProvider {
 
-    @Override
-    public String buildRequestBody(KeycloakConfiguration configuration) throws TokenProviderException {
-        KeycloakConfiguration.Jwt jwtConfig = configuration.getJwt();
-        if(jwtConfig == null){
-            throw new TokenProviderException("JWT configuration cannot be null.");
+    public String buildRequestBody(KeycloakRequestConfig config) throws TokenProviderException {
+        if(!(config instanceof JwtConfig)){
+            throw new TokenProviderException("Invalid JWT configuration.");
         }
+
+        JwtConfig jwtConfig = (JwtConfig) config;
 
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                 .jwtID(UUID.randomUUID().toString())
-                .audience(configuration.getUrl() + "/realms/" + configuration.getRealm())
+                .audience(jwtConfig.getUrl() + "/realms/" + jwtConfig.getRealm())
                 .expirationTime(Date.from(Instant.now().plus(jwtConfig.getTtlValue(), jwtConfig.getTtlUnit())))
-                .subject(configuration.getClientId())
+                .subject(jwtConfig.getClientId())
                 .notBeforeTime(Date.from(Instant.now()))
                 .build();
 
@@ -42,7 +44,7 @@ public class RequestBodyProviderJwt implements RequestBodyProvider {
             throw new TokenProviderException(e);
         }
 
-        return  "client_id=" + URLEncoder.encode(configuration.getClientId()) +
+        return  "client_id=" + URLEncoder.encode(jwtConfig.getClientId()) +
                 "&grant_type=client_credentials" +
                 "&client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer" +
                 "&client_assertion=" + signedJWT.serialize();

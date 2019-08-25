@@ -1,7 +1,7 @@
 package com.github.rahmnathan.oidc.adapter.keycloak.domain;
 
-import com.github.rahmnathan.oidc.adapter.keycloak.domain.config.KeycloakConfiguration;
-import com.github.rahmnathan.oidc.adapter.keycloak.domain.providers.AuthType;
+import com.github.rahmnathan.oidc.adapter.keycloak.domain.client.KeycloakClient;
+import com.github.rahmnathan.oidc.adapter.keycloak.domain.config.KeycloakRequestConfig;
 import com.nimbusds.jwt.SignedJWT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,16 +13,13 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 
 public class KeycloakService {
     private final Logger logger = LoggerFactory.getLogger(KeycloakService.class);
-    private RequestBodyProvider requestBodyProvider;
-    private final KeycloakConfiguration configuration;
+    private final KeycloakRequestConfig config;
     private final KeycloakClient client;
     private SignedJWT cachedToken;
 
-    public KeycloakService(KeycloakConfiguration configuration, KeycloakClient client, AuthType authType) {
-        this.requestBodyProvider = authType.getRequestBodyProvider();
-        this.configuration = configuration;
+    public KeycloakService(KeycloakRequestConfig configuration, KeycloakClient client) {
         this.client = client;
-        client.init(configuration);
+        this.config = configuration;
     }
 
     public SignedJWT getAccessToken() throws Exception {
@@ -36,8 +33,12 @@ public class KeycloakService {
             }
         }
 
-        String requestBody = requestBodyProvider.buildRequestBody(configuration);
-        cachedToken = client.getAccessToken(requestBody);
+        RequestBodyProvider requestBodyProvider = config.getAuthType().getBodyProvider();
+        Class<? extends KeycloakRequestConfig> requestConfigType = config.getAuthType().getConfigurationType();
+
+        String requestBody = requestBodyProvider.buildRequestBody(requestConfigType.cast(config));
+        cachedToken = client.getAccessToken(requestBody, config.getRealm());
+
         return cachedToken;
     }
 }

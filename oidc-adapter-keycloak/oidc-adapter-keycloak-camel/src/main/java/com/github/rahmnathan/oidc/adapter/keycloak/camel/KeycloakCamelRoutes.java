@@ -2,7 +2,7 @@ package com.github.rahmnathan.oidc.adapter.keycloak.camel;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.rahmnathan.oidc.adapter.keycloak.domain.KeycloakTokenResponseParser;
-import com.github.rahmnathan.oidc.adapter.keycloak.domain.config.KeycloakConfiguration;
+import com.github.rahmnathan.oidc.adapter.keycloak.domain.client.KeycloakClientConfig;
 import com.nimbusds.jwt.SignedJWT;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
@@ -15,17 +15,16 @@ import org.apache.http.entity.ContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.github.rahmnathan.oidc.adapter.keycloak.domain.KeycloakConstants.KEYCLOAK_TOKEN_ENDPOINT;
-
 public class KeycloakCamelRoutes {
     private final Logger logger = LoggerFactory.getLogger(KeycloakCamelRoutes.class);
     private final KeycloakTokenResponseParser tokenResponseParser = new KeycloakTokenResponseParser();
     public static final String GET_TOKEN_ROUTE = "direct:getToken";
     private static final String GET_TOKEN_MICROMETER_ROUTE = "micrometer:timer:oidc.keycloak.get-token";
-    private final KeycloakConfiguration config;
+    public static final String REALM_PROPERTY = "realmProperty";
+    private final KeycloakClientConfig config;
     private final CamelContext context;
 
-   public KeycloakCamelRoutes(CamelContext context, KeycloakConfiguration config) {
+   public KeycloakCamelRoutes(CamelContext context, KeycloakClientConfig config) {
         this.config = config;
         this.context = context;
     }
@@ -38,18 +37,19 @@ public class KeycloakCamelRoutes {
                     onException(HttpOperationFailedException.class)
                             .onWhen(exchange -> exchange.getException(HttpOperationFailedException.class).getStatusCode() >= 500)
                             .useExponentialBackOff()
-                            .redeliveryDelay(500)
-                            .maximumRedeliveries(3)
+                            .redeliveryDelay(config.getInitialRetryDelay())
+                            .maximumRedeliveries(config.getRetryCount())
                             .end();
 
                     from(GET_TOKEN_ROUTE)
                             .hystrix()
                                 .hystrixConfiguration()
-                                    .executionTimeoutInMilliseconds(5000)
+                                    .executionTimeoutInMilliseconds(config.getTimoutMs())
                                 .end()
                                 .inheritErrorHandler(true)
                                 .setHeader(HttpHeaders.CONTENT_TYPE, constant(ContentType.APPLICATION_FORM_URLENCODED))
                                 .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.POST))
+                                .setHeader(Exchange.HTTP_PATH, simple("/realms/${property." + REALM_PROPERTY + "}/protocol/openid-connect/token"))
                                 .to(GET_TOKEN_MICROMETER_ROUTE + "?action=start")
                                 .to(processUrl(config))
                                 .to(GET_TOKEN_MICROMETER_ROUTE + "?action=stop")
@@ -67,12 +67,12 @@ public class KeycloakCamelRoutes {
         }
     }
 
-    private String processUrl(KeycloakConfiguration config){
+    private String processUrl(KeycloakClientConfig config){
        String url = config.getUrl();
         if(url.startsWith("https")){
-            return url.replace("https", "https4") + String.format(KEYCLOAK_TOKEN_ENDPOINT, config.getRealm());
+            return url.replace("https", "https4");
         } else if (url.startsWith("http")){
-            return url.replace("http", "http4") + String.format(KEYCLOAK_TOKEN_ENDPOINT, config.getRealm());
+            return url.replace("http", "http4");
         }
 
         return url;
