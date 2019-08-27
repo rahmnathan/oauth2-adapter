@@ -1,8 +1,7 @@
 package com.github.rahmnathan.oidc.adapter.keycloak.camel;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.github.rahmnathan.oidc.adapter.keycloak.domain.KeycloakTokenResponseParser;
-import com.github.rahmnathan.oidc.adapter.keycloak.domain.client.KeycloakClientConfig;
+import com.github.rahmnathan.oidc.adapter.keycloak.domain.client.OidcClientConfig;
 import com.nimbusds.jwt.SignedJWT;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
@@ -21,10 +20,10 @@ public class KeycloakCamelRoutes {
     public static final String GET_TOKEN_ROUTE = "direct:getToken";
     private static final String GET_TOKEN_MICROMETER_ROUTE = "micrometer:timer:oidc.keycloak.get-token";
     public static final String REALM_PROPERTY = "realmProperty";
-    private final KeycloakClientConfig config;
+    private final OidcClientConfig config;
     private final CamelContext context;
 
-   public KeycloakCamelRoutes(CamelContext context, KeycloakClientConfig config) {
+   public KeycloakCamelRoutes(CamelContext context, OidcClientConfig config) {
         this.config = config;
         this.context = context;
     }
@@ -67,7 +66,7 @@ public class KeycloakCamelRoutes {
         }
     }
 
-    private String processUrl(KeycloakClientConfig config){
+    private String processUrl(OidcClientConfig config){
        String url = config.getUrl();
         if(url.startsWith("https")){
             return url.replace("https", "https4");

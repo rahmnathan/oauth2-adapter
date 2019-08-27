@@ -17,8 +17,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.github.rahmnathan.oidc.adapter</groupId>
-            <artifactId>oidc-adapter-keycloak-domain</artifactId>
+            <groupId>com.github.rahmnathan.oidc</groupId>
+            <artifactId>oidc-adapter-domain</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 
