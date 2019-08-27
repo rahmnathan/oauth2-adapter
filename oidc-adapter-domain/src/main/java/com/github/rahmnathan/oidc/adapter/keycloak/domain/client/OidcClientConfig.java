@@ -6,7 +6,7 @@ import lombok.NonNull;
 
 @Data
 @Builder
-public class KeycloakClientConfig {
+public class OidcClientConfig {
     @NonNull
     private final String url;
     private final int timoutMs;

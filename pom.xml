@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.rahmnathan.oidc.adapter</groupId>
+    <groupId>com.github.rahmnathan.oidc</groupId>
     <artifactId>oidc-adapter</artifactId>
     <packaging>pom</packaging>
     <version>1</version>
@@ -16,13 +16,21 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+
+        <junit.jupiter.version>5.5.1</junit.jupiter.version>
+        <slf4j.version>1.7.28</slf4j.version>
+        <lombok.version>1.18.8</lombok.version>
+        <camel.version>2.24.1</camel.version>
+        <resilience4j.version>0.17.0</resilience4j.version>
+        <nimbus.version>7.8</nimbus.version>
+        <jackson.version>2.9.9</jackson.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.8</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

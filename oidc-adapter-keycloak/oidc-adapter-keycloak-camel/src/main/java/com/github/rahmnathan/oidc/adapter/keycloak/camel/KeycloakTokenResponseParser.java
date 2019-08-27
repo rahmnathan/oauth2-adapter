@@ -1,4 +1,4 @@
-package com.github.rahmnathan.oidc.adapter.keycloak.domain;
+package com.github.rahmnathan.oidc.adapter.keycloak.camel;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.rahmnathan.oidc.adapter.keycloak.domain.exception.TokenProviderException;

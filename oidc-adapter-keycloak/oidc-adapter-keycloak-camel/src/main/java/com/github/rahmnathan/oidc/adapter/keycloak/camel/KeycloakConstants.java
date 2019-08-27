@@ -1,4 +1,4 @@
-package com.github.rahmnathan.oidc.adapter.keycloak.domain;
+package com.github.rahmnathan.oidc.adapter.keycloak.camel;
 
 public class KeycloakConstants {
     public static final String KEYCLOAK_ROOT = "/auth";

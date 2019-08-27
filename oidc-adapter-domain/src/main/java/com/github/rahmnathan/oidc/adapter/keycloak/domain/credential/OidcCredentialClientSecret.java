@@ -1,4 +1,4 @@
-package com.github.rahmnathan.oidc.adapter.keycloak.domain.config;
+package com.github.rahmnathan.oidc.adapter.keycloak.domain.credential;
 
 import com.github.rahmnathan.oidc.adapter.keycloak.domain.providers.AuthType;
 import lombok.Builder;
@@ -8,12 +8,12 @@ import lombok.Value;
 
 @EqualsAndHashCode(callSuper = true)
 @Value
-public class ClientSecretConfig extends KeycloakRequestConfig {
+public class OidcCredentialClientSecret extends OidcCredential {
     @NonNull
     private final String clientSecret;
 
     @Builder
-    public ClientSecretConfig(String realm, String clientId, TokenRefreshThreshold tokenRefreshThreshold, @NonNull String clientSecret) {
+    public OidcCredentialClientSecret(String realm, String clientId, Duration tokenRefreshThreshold, @NonNull String clientSecret) {
         super(realm, clientId, tokenRefreshThreshold);
         this.clientSecret = clientSecret;
     }
@@ -21,5 +21,10 @@ public class ClientSecretConfig extends KeycloakRequestConfig {
     @Override
     public AuthType getAuthType(){
         return AuthType.CLIENT_SECRET;
+    }
+
+    @Override
+    public String toRequestBody() {
+        return null;
     }
 }
