@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.rahmnathan.oidc</groupId>
-    <artifactId>oidc-adapter</artifactId>
+    <groupId>com.github.rahmnathan.oauth2</groupId>
+    <artifactId>oauth2-adapter</artifactId>
     <packaging>pom</packaging>
     <version>1</version>
     <modules>
-        <module>oidc-adapter-domain</module>
-        <module>oidc-adapter-keycloak</module>
+        <module>oauth2-adapter-domain</module>
+        <module>oauth2-adapter-keycloak</module>
     </modules>
 
     <properties>
@@ -34,5 +34,4 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
 </project>
