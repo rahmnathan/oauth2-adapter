@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>oauth2-adapter-keycloak-camel</artifactId>
+    <artifactId>keycloak-camel</artifactId>
 
     <properties>
         <junit.version>4.12</junit.version>
