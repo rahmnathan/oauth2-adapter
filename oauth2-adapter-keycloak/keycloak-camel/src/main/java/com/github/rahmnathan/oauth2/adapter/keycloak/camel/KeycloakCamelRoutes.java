@@ -42,7 +42,7 @@ public class KeycloakCamelRoutes {
                             .end();
 
                     from(GET_TOKEN_ROUTE)
-                            .hystrix()
+                            .circuitBreaker()
                                 .hystrixConfiguration()
                                     .executionTimeoutInMilliseconds(config.getTimoutMs())
                                 .end()
@@ -51,30 +51,19 @@ public class KeycloakCamelRoutes {
                                 .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.POST))
                                 .setHeader(Exchange.HTTP_PATH, simple("/realms/${property." + REALM_PROPERTY + "}/protocol/openid-connect/token"))
                                 .to(GET_TOKEN_MICROMETER_ROUTE + "?action=start")
-                                .to(processUrl(config))
+                                .to(config.getUrl())
                                 .to(GET_TOKEN_MICROMETER_ROUTE + "?action=stop")
                                 .unmarshal().json(JsonLibrary.Jackson, JsonNode.class)
                                 .process(exchange -> {
                                     SignedJWT accessToken = tokenResponseParser.extractAccessToken(exchange.getIn().getBody(JsonNode.class));
                                     exchange.getIn().setBody(accessToken);
                                 })
-                            .endHystrix()
+                            .endCircuitBreaker()
                             .end();
                 }
             });
         } catch (Exception e){
             throw new RuntimeException(e);
         }
-    }
-
-    private String processUrl(OAuth2ClientConfig config){
-       String url = config.getUrl();
-        if(url.startsWith("https")){
-            return url.replace("https", "https4");
-        } else if (url.startsWith("http")){
-            return url.replace("http", "http4");
-        }
-
-        return url;
     }
 }

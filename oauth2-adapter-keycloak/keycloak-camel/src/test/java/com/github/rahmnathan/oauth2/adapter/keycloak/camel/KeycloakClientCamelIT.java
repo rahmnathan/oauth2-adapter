@@ -5,9 +5,9 @@ import com.github.rahmnathan.oauth2.adapter.domain.client.OAuth2ClientConfig;
 import com.github.rahmnathan.oauth2.adapter.domain.credential.Duration;
 import com.github.rahmnathan.oauth2.adapter.domain.credential.OAuth2CredentialJwt;
 import com.nimbusds.jwt.SignedJWT;
-import org.apache.camel.test.junit4.CamelTestSupport;
-import org.junit.Before;
-import org.junit.Test;
+import org.apache.camel.test.junit5.CamelTestSupport;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.temporal.ChronoUnit;
 
@@ -16,7 +16,7 @@ public class KeycloakClientCamelIT extends CamelTestSupport {
     private KeycloakClientCamel keycloakClientCamel;
     private OAuth2Service keycloakService;
 
-    @Before
+    @BeforeEach
     public void init() {
         OAuth2ClientConfig clientConfig = OAuth2ClientConfig.builder()
                 .url(url)

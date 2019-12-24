@@ -11,10 +11,6 @@
 
     <artifactId>keycloak-camel</artifactId>
 
-    <properties>
-        <junit.version>4.12</junit.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.github.rahmnathan.oauth2</groupId>
@@ -40,7 +36,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
-            <artifactId>camel-http4</artifactId>
+            <artifactId>camel-http</artifactId>
             <version>${camel.version}</version>
         </dependency>
         <dependency>
@@ -52,14 +48,8 @@
         <!-- Test -->
         <dependency>
             <groupId>org.apache.camel</groupId>
-            <artifactId>camel-test</artifactId>
+            <artifactId>camel-test-spring-junit5</artifactId>
             <version>${camel.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
