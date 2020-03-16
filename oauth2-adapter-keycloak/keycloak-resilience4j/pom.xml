@@ -16,6 +16,7 @@
             <groupId>com.github.rahmnathan.oauth2</groupId>
             <artifactId>oauth2-adapter-domain</artifactId>
             <version>${project.parent.version}</version>
+            <classifier>jdk8</classifier>
         </dependency>
         <dependency>
             <groupId>io.github.resilience4j</groupId>
