@@ -13,6 +13,11 @@
         <module>oauth2-adapter-keycloak</module>
     </modules>
 
+    <scm>
+        <connection>scm:git:git@github.com:rahmnathan/oauth2-adapter.git</connection>
+        <developerConnection>scm:git:git@github.com:rahmnathan/oauth2-adapter.git</developerConnection>
+    </scm>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
