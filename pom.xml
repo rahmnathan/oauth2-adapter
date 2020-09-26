@@ -13,17 +13,22 @@
         <module>oauth2-adapter-keycloak</module>
     </modules>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+    <scm>
+        <connection>scm:git:git@github.com:rahmnathan/oauth2-adapter.git</connection>
+        <developerConnection>scm:git:git@github.com:rahmnathan/oauth2-adapter.git</developerConnection>
+    </scm>
 
-        <junit.jupiter.version>5.5.1</junit.jupiter.version>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <junit.jupiter.version>5.5.2</junit.jupiter.version>
         <slf4j.version>1.7.28</slf4j.version>
         <lombok.version>1.18.8</lombok.version>
-        <camel.version>3.2.0</camel.version>
-        <resilience4j.version>0.17.0</resilience4j.version>
-        <nimbus.version>7.8</nimbus.version>
-        <jackson.version>2.10.1</jackson.version>
+        <camel.version>3.4.0</camel.version>
+        <resilience4j.version>1.4.0</resilience4j.version>
+        <nimbus.version>8.19</nimbus.version>
+        <jackson.version>2.11.0</jackson.version>
     </properties>
 
     <dependencies>
@@ -49,7 +54,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.5.2</version>
+            <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
