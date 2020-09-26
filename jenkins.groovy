@@ -26,7 +26,7 @@ node {
                 script: "'${mvnHome}/bin/mvn' help:evaluate -Dexpression=project.version -q -DforceStdout",
                 returnStdout: true
         ).trim()
-        env.NEW_VERSION = "${PROJECT_VERSION}.${BUILD_NUMBER}.jdk8"
+        env.NEW_VERSION = "${PROJECT_VERSION}.${BUILD_NUMBER}"
         sh "'${mvnHome}/bin/mvn' -DnewVersion='${NEW_VERSION}' versions:set"
     }
     stage('Tag') {
