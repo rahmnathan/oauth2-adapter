@@ -19,14 +19,14 @@ node {
         buildInfo = Artifactory.newBuildInfo()
     }
     stage('Checkout') {
-        git 'https://github.com/rahmnathan/oauth2-adapter.git'
+        git branch: 'java-8', url: 'https://github.com/rahmnathan/oauth2-adapter.git'
     }
     stage('Set Version') {
         PROJECT_VERSION = sh(
                 script: "'${mvnHome}/bin/mvn' help:evaluate -Dexpression=project.version -q -DforceStdout",
                 returnStdout: true
         ).trim()
-        env.NEW_VERSION = "${PROJECT_VERSION}.${BUILD_NUMBER}"
+        env.NEW_VERSION = "${PROJECT_VERSION}.${BUILD_NUMBER}.jdk8"
         sh "'${mvnHome}/bin/mvn' -DnewVersion='${NEW_VERSION}' versions:set"
     }
     stage('Tag') {
