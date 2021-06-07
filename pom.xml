@@ -24,11 +24,11 @@
 
         <junit.jupiter.version>5.5.2</junit.jupiter.version>
         <slf4j.version>1.7.30</slf4j.version>
-        <lombok.version>1.18.10</lombok.version>
-        <camel.version>3.6.0</camel.version>
+        <lombok.version>1.18.20</lombok.version>
+        <camel.version>3.10.0</camel.version>
         <resilience4j.version>1.6.1</resilience4j.version>
         <nimbus.version>9.1.4</nimbus.version>
-        <jackson.version>2.12.0</jackson.version>
+        <jackson.version>2.12.3</jackson.version>
     </properties>
 
     <dependencies>
