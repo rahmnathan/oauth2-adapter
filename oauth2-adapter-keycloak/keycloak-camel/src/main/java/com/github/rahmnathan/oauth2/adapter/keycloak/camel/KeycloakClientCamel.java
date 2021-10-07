@@ -42,6 +42,6 @@ public class KeycloakClientCamel extends OAuth2Client {
             throw new OAuth2AdapterException(responseException);
         }
 
-        return responseExchange.getOut().getBody(SignedJWT.class);
+        return responseExchange.getMessage().getBody(SignedJWT.class);
     }
 }

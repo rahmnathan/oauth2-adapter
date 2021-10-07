@@ -7,8 +7,8 @@ import com.nimbusds.jwt.SignedJWT;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.http.base.HttpOperationFailedException;
 import org.apache.camel.http.common.HttpMethods;
-import org.apache.camel.http.common.HttpOperationFailedException;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.http.HttpHeaders;
 import org.apache.http.entity.ContentType;
@@ -43,8 +43,9 @@ public class KeycloakCamelRoutes {
 
                     from(GET_TOKEN_ROUTE)
                             .circuitBreaker()
-                                .hystrixConfiguration()
-                                    .executionTimeoutInMilliseconds(config.getTimoutMs())
+                                .resilience4jConfiguration()
+                                    .timeoutDuration(config.getTimoutMs())
+                                    .timeoutEnabled(true)
                                 .end()
                                 .inheritErrorHandler(true)
                                 .setHeader(HttpHeaders.CONTENT_TYPE, constant(ContentType.APPLICATION_FORM_URLENCODED))
