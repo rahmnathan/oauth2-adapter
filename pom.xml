@@ -7,7 +7,7 @@
     <groupId>com.github.rahmnathan.oauth2</groupId>
     <artifactId>oauth2-adapter</artifactId>
     <packaging>pom</packaging>
-    <version>2</version>
+    <version>3</version>
     <modules>
         <module>oauth2-adapter-domain</module>
         <module>oauth2-adapter-keycloak</module>
@@ -19,8 +19,8 @@
     </scm>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>19</maven.compiler.source>
+        <maven.compiler.target>19</maven.compiler.target>
 
         <junit.jupiter.version>5.5.2</junit.jupiter.version>
         <slf4j.version>1.7.30</slf4j.version>
