@@ -19,16 +19,16 @@
     </scm>
 
     <properties>
-        <maven.compiler.source>19</maven.compiler.source>
-        <maven.compiler.target>19</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
 
-        <junit.jupiter.version>5.5.2</junit.jupiter.version>
-        <slf4j.version>1.7.30</slf4j.version>
-        <lombok.version>1.18.20</lombok.version>
-        <camel.version>3.12.0</camel.version>
-        <resilience4j.version>1.6.1</resilience4j.version>
-        <nimbus.version>9.1.4</nimbus.version>
-        <jackson.version>2.13.0</jackson.version>
+        <junit.jupiter.version>5.10.2</junit.jupiter.version>
+        <slf4j.version>2.0.13</slf4j.version>
+        <lombok.version>1.18.32</lombok.version>
+        <camel.version>4.6.0</camel.version>
+        <resilience4j.version>2.2.0</resilience4j.version>
+        <nimbus.version>9.40</nimbus.version>
+        <jackson.version>2.17.1</jackson.version>
     </properties>
 
     <dependencies>
@@ -48,7 +48,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
+            <version>1.4.12</version>
             <scope>test</scope>
         </dependency>
         <dependency>

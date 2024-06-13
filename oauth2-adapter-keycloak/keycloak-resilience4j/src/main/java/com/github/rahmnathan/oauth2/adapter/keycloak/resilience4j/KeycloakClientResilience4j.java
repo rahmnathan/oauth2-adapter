@@ -9,7 +9,6 @@ import com.github.rahmnathan.oauth2.adapter.domain.exception.OAuth2AdapterExcept
 import com.nimbusds.jwt.SignedJWT;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.retry.Retry;
-import io.vavr.control.Try;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +42,7 @@ public class KeycloakClientResilience4j extends OAuth2Client {
         decoratedSupplier = Retry.decorateSupplier(retry, decoratedSupplier);
 
         // Execute the decorated supplier and recover from any exception
-        return Try.ofSupplier(decoratedSupplier).get();
+        return decoratedSupplier.get();
     }
 
     public SignedJWT getAccessTokenInternal(String requestBody, String realm) {

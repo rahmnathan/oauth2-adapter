@@ -10,8 +10,8 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.http.base.HttpOperationFailedException;
 import org.apache.camel.http.common.HttpMethods;
 import org.apache.camel.model.dataformat.JsonLibrary;
-import org.apache.http.HttpHeaders;
-import org.apache.http.entity.ContentType;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.HttpHeaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
