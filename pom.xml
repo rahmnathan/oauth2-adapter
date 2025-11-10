@@ -7,7 +7,7 @@
     <groupId>com.github.rahmnathan.oauth2</groupId>
     <artifactId>oauth2-adapter</artifactId>
     <packaging>pom</packaging>
-    <version>3</version>
+    <version>4</version>
     <modules>
         <module>oauth2-adapter-domain</module>
         <module>oauth2-adapter-keycloak</module>
